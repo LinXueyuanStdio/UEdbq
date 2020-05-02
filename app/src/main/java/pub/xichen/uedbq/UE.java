@@ -87,6 +87,7 @@ public class UE extends ApplicationAdapter {
     }
 
     public void setAnimate(String animate) {
+        if (state != null)
         state.addAnimation(0, animate, true, 0);
     }
 

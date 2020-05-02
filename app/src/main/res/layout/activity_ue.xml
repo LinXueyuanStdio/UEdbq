@@ -1,85 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp" />
+
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_walk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Walk"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_run"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Run"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_jump"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Jump"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_idle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Idle"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_shoot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Shoot"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_hit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Hit"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_death"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@android:color/holo_green_light"
-            android:text="Death"
-            android:textColor="@android:color/white" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:id="@+id/container"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-</ScrollView>
+        android:text="Fan-made animation player. Resources copyright @Cygames" />
+</LinearLayout>

@@ -4,11 +4,20 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.SimpleAdapter;
+
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AppActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UeActivity extends AppActivity {
 
@@ -17,31 +26,20 @@ public class UeActivity extends AppActivity {
 
     Button btnWalk, btnRun, btnJump, btnIdle, btnShoot, btnHit, btnDeath;
 
+    class AnimData {
+        String name;
+        String id;
+
+        public AnimData(String name, String id) {
+            this.name = name;
+            this.id = id;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ue);
-
-        btnWalk = (Button) findViewById(R.id.btn_walk);
-        btnWalk.setOnClickListener(vOnClickListener);
-
-        btnRun = (Button) findViewById(R.id.btn_run);
-        btnRun.setOnClickListener(vOnClickListener);
-
-        btnJump = (Button) findViewById(R.id.btn_jump);
-        btnJump.setOnClickListener(vOnClickListener);
-
-        btnIdle = (Button) findViewById(R.id.btn_idle);
-        btnIdle.setOnClickListener(vOnClickListener);
-
-        btnShoot = (Button) findViewById(R.id.btn_shoot);
-        btnShoot.setOnClickListener(vOnClickListener);
-
-        btnHit = (Button) findViewById(R.id.btn_hit);
-        btnHit.setOnClickListener(vOnClickListener);
-
-        btnDeath = (Button) findViewById(R.id.btn_death);
-        btnDeath.setOnClickListener(vOnClickListener);
 
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.r = cfg.g = cfg.b = cfg.a = 8;
@@ -52,7 +50,49 @@ public class UeActivity extends AppActivity {
             glView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
             glView.setZOrderOnTop(true);
         }
-        addSpineBoy();
+        FrameLayout frameLayout = findViewById(R.id.container);
+        frameLayout.addView(spineBoyView);
+
+        AppCompatSpinner spinner = findViewById(R.id.spinner);
+        List<AnimData> anims = new ArrayList<>();
+        anims.add(new AnimData("闲置", "07_idle"));
+        anims.add(new AnimData("准备", "07_standBy"));
+        anims.add(new AnimData("走", "07_walk"));
+        anims.add(new AnimData("跑", "07_run"));
+        anims.add(new AnimData("跑（入场）", "07_run_gamestart"));
+        anims.add(new AnimData("落地", "07_landing"));
+        anims.add(new AnimData("攻击", "07_attack"));
+        anims.add(new AnimData("攻击（扫荡）", "07_attack_skipQuest"));
+        anims.add(new AnimData("庆祝-短", "07_joy_short"));
+        anims.add(new AnimData("庆祝-长", "07_joy_long"));
+        anims.add(new AnimData("受伤", "07_damage"));
+        anims.add(new AnimData("死亡", "07_die"));
+        anims.add(new AnimData("合作-准备", "07_multi_standBy"));
+        anims.add(new AnimData("合作-闲置", "07_multi_idle_standBy"));
+        anims.add(new AnimData("合作-闲置（无武器）", "07_multi_idle_noWeapon"));
+        final List<Map<String, String>> data = new ArrayList<>();
+        for (AnimData animData : anims) {
+            Map<String, String> a = new HashMap<>();
+            a.put("name", animData.name);
+            a.put("id", animData.id);
+            data.add(a);
+        }
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, data, R.layout.item,
+                new String[]{"name"},
+                new int[]{R.id.name});
+        spinner.setAdapter(simpleAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spineBoy.setAnimate(data.get(position).get("id"));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void addSpineBoy() {
